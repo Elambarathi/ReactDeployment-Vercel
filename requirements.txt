@@ -1,0 +1,5 @@
+npm install -g npm
+npm nstall npx
+npm install framer-motion
+npm install axios react-hook-form
+npm install axios
