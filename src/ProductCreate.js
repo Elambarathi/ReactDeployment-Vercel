@@ -22,7 +22,7 @@ function ProductCreate() {
         formData.append('seller.rating', data.seller_rating);
 
         try {
-            const response = await axios.post('https://django-deployment-vercel.vercel.app/api/products/create/', formData, {
+            const response = await axios.post('https://backend-186vr6nm6-elambarathi12gmailcoms-projects.vercel.app/api/products/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
