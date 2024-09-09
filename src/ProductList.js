@@ -6,7 +6,7 @@ function ProductList() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('https://django-deployment-vercel.vercel.app/api/products/')
+        axios.get('https://backend-186vr6nm6-elambarathi12gmailcoms-projects.vercel.app/api/products/')
             .then(response => {
                 setProducts(response.data);
             })
