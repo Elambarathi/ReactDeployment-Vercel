@@ -6,7 +6,7 @@ function ProductList() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('https://backend-186vr6nm6-elambarathi12gmailcoms-projects.vercel.app/api/products/')
+        axios.get('http://127.0.0.1:8000/api/products/')
             .then(response => {
                 setProducts(response.data);
             })
@@ -28,16 +28,16 @@ function ProductList() {
                         transition={{ duration: 0.3, delay: index * 0.1 }}
                         whileHover={{ scale: 1.05 }}
                     >
-                        <h3 style={styles.productTitle}>{product.title}</h3>
-                        <img src={`${product.image}`} alt={product.title} style={styles.productImage} />
+                        <h3 style={styles.productTitle}>{product.name}</h3>
+                        <img src={`${product.product_image}`} alt={product.name} style={styles.productImage} />
                         <p style={styles.productDescription}>{product.description}</p>
-                        <p style={styles.productPrice}>Original Price: ${product.original_price}</p>
+                        <p style={styles.productPrice}>Original Price: ${product.actual_price}</p>
                         <p style={styles.productPrice}>Offer Price: ${product.offer_price}</p>
-                        <p style={styles.warranty}>Warranty: {product.warranty_offer_title}</p>
+                        <p style={styles.warranty}>Warranty: {product.warranty_period}</p>
                         <div style={styles.sellerInfo}>
                             <h4 style={styles.sellerName}>Seller: {product.seller.name}</h4>
-                            <img src={`${product.seller.logo}`} alt={product.seller.name} style={styles.sellerLogo} />
-                            <p style={styles.sellerRating}>Rating: {product.seller.rating}</p>
+                            <img src={`${product.seller.photo}`} alt={product.seller.name} style={styles.sellerLogo} />
+                            <p style={styles.sellerRating}>Rating: {product.seller.rating} / 5</p>
                         </div>
                     </motion.div>
                 ))}
