@@ -1,52 +1,82 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-function ProductAddPage() {
-  const [product, setProduct] = useState({
-    name: '',
-    photo: null,
-    actualPrice: '',
-    offerPrice: '',
-    description: '',
-    sellerName: '',
-    sellerPhoto: null,
-    sellerRating: '',
-  });
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setProduct({
-      ...product,
-      [name]: files ? files[0] : value,
-    });
-  };
+function ProductCreate() {
+    const { register, handleSubmit, reset } = useForm();
+    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    Object.keys(product).forEach((key) => formData.append(key, product[key]));
-    await axios.post('https://test-five-khaki-30.vercel.app/api/products/', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-  };
+    const onSubmit = async (data) => {
+        setLoading(true);
 
-  return (
-    <div>
-      <h1>Add Product</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" />
-        <input type="file" name="photo" onChange={handleChange} />
-        <input type="text" name="actualPrice" value={product.actualPrice} onChange={handleChange} placeholder="Actual Price" />
-        <input type="text" name="offerPrice" value={product.offerPrice} onChange={handleChange} placeholder="Offer Price" />
-        <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" />
-        <input type="text" name="sellerName" value={product.sellerName} onChange={handleChange} placeholder="Seller Name" />
-        <input type="file" name="sellerPhoto" onChange={handleChange} />
-        <input type="number" name="sellerRating" value={product.sellerRating} onChange={handleChange} placeholder="Seller Rating" />
-        <button type="submit">Add Product</button>
-      </form>
-    </div>
-  );
+        // Create a FormData object to send the file and other data
+        const formData = new FormData();
+        formData.append('name', data.name); // Product name
+        formData.append('description', data.description); // Product description
+        formData.append('actual_price', data.actual_price); // Original price
+        formData.append('offer_price', data.offer_price); // Offer price
+        formData.append('product_image', data.product_image[0]); // Product image
+        formData.append('warranty_period', data.warranty_period); // Warranty period
+
+        // Seller details (nested)
+        formData.append('seller.name', data.seller_name); // Seller name
+        formData.append('seller.photo', data.seller_photo[0]); // Seller photo
+        formData.append('seller.rating', data.seller_rating); // Seller rating
+
+        try {
+            // Sending POST request to the backend with form data
+            const response = await axios.post('http://127.0.0.1:8000/api/products/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            setSuccessMessage('Product created successfully!');
+            reset(); // Reset the form after successful submission
+        } catch (error) {
+            console.error('There was an error creating the product!', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div style={styles.container}>
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                style={styles.formContainer}
+            >
+                <h2 style={styles.heading}>Create a New Product</h2>
+                <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+                    {/* Product fields */}
+                    <input {...register('name')} placeholder="Product Name" required style={styles.input} />
+                    <input {...register('product_image')} type="file" required style={styles.input} />
+                    <textarea {...register('description')} placeholder="Description" required style={styles.textarea} />
+                    <input {...register('actual_price')} type="number" placeholder="Original Price" required style={styles.input} />
+                    <input {...register('offer_price')} type="number" placeholder="Offer Price" required style={styles.input} />
+                    <input {...register('warranty_period')} placeholder="Warranty Period" style={styles.input} />
+                    
+                    {/* Seller fields */}
+                    <h3 style={styles.subheading}>Seller Details:</h3>
+                    <input {...register('seller_name')} placeholder="Seller Name" required style={styles.input} />
+                    <input {...register('seller_photo')} type="file" required style={styles.input} />
+                    <input {...register('seller_rating')} type="number" step="0.1" placeholder="Seller Rating" required style={styles.input} />
+                    
+                    {/* Submit button */}
+                    <button type="submit" style={styles.button} disabled={loading}>
+                        {loading ? 'Creating...' : 'Create Product'}
+                    </button>
+                </form>
+                {successMessage && <p style={styles.successMessage}>{successMessage}</p>}
+            </motion.div>
+        </div>
+    );
 }
+
+// Define some basic styles
 const styles = {
     container: {
         display: 'flex',
@@ -109,4 +139,4 @@ const styles = {
     }
 };
 
-export default ProductAddPage;
+export default ProductCreate;
