@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { motion } from 'framer-motion';
 function ProductAddPage() {
   const [product, setProduct] = useState({
     name: '',
