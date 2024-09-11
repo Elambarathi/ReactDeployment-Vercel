@@ -21,13 +21,13 @@ function ProductCreate() {
         formData.append('warranty_period', data.warranty_period); // Warranty period
 
         // Seller details (nested)
-        formData.append('seller.name', data.name); // Seller name
-        formData.append('seller.photo', data.photo[0]); // Seller photo
-        formData.append('seller.rating', data.rating); // Seller rating
+        formData.append('seller.name', data.seller_name); // Seller name
+        formData.append('seller.photo', data.seller_photo[0]); // Seller photo
+        formData.append('seller.rating', data.seller_rating); // Seller rating
 
         try {
             // Sending POST request to the backend with form data
-            const response = await axios.post('https://test-five-khaki-30.vercel.app/api/products/', formData, {
+            const response = await axios.post('http://127.0.0.1:8000/api/products/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
