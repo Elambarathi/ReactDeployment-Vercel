@@ -27,7 +27,7 @@ function ProductCreate() {
 
         try {
             // Sending POST request to the backend with form data
-            const response = await axios.post('http://127.0.0.1:8000/api/products/', formData, {
+            const response = await axios.post('https://test-five-khaki-30.vercel.app/api/products/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
