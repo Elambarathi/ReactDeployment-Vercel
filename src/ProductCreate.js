@@ -47,5 +47,66 @@ function ProductAddPage() {
     </div>
   );
 }
+const styles = {
+    container: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        backgroundColor: '#f0f4f8',
+    },
+    formContainer: {
+        background: '#fff',
+        padding: '20px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        width: '100%',
+        maxWidth: '600px',
+    },
+    heading: {
+        marginBottom: '20px',
+        color: '#333',
+        textAlign: 'center',
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    input: {
+        marginBottom: '10px',
+        padding: '10px',
+        border: '1px solid #ddd',
+        borderRadius: '4px',
+        fontSize: '16px',
+    },
+    textarea: {
+        marginBottom: '10px',
+        padding: '10px',
+        border: '1px solid #ddd',
+        borderRadius: '4px',
+        fontSize: '16px',
+        height: '100px',
+        resize: 'none',
+    },
+    button: {
+        padding: '10px 20px',
+        backgroundColor: '#007bff',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '4px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s',
+    },
+    successMessage: {
+        marginTop: '20px',
+        color: 'green',
+        textAlign: 'center',
+    },
+    subheading: {
+        margin: '20px 0',
+        color: '#555',
+    }
+};
 
 export default ProductAddPage;
