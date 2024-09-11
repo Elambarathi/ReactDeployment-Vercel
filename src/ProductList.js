@@ -2,38 +2,48 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
-function ProductListPage() {
-  const [products, setProducts] = useState([]);
+function ProductList() {
+    const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await axios.get('https://test-five-khaki-30.vercel.app/api/products/');
-      setProducts(response.data);
-    };
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/products/')
+            .then(response => {
+                setProducts(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the products!', error);
+            });
+    }, []);
 
-    fetchProducts();
-  }, []);
-
-  return (
-    <div>
-      <h1>Product List</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h2>{product.name}</h2>
-            <img src={product.photo} alt={product.name} style={{ width: '100px' }} />
-            <p>Actual Price: ${product.actualPrice}</p>
-            <p>Offer Price: ${product.offerPrice}</p>
-            <p>Description: {product.description}</p>
-            <h3>Seller Details</h3>
-            <p>Seller Name: {product.seller.name}</p>
-            <img src={product.seller.photo} alt={product.seller.name} style={{ width: '50px' }} />
-            <p>Seller Rating: {product.seller.rating} / 5</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div style={styles.container}>
+            <h2 style={styles.heading}>Product List</h2>
+            <div style={styles.productGrid}>
+                {products.map((product, index) => (
+                    <motion.div
+                        key={product.id}
+                        style={styles.productCard}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        whileHover={{ scale: 1.05 }}
+                    >
+                        <h3 style={styles.productTitle}>{product.name}</h3>
+                        <img src={`${product.product_image}`} alt={product.name} style={styles.productImage} />
+                        <p style={styles.productDescription}>{product.description}</p>
+                        <p style={styles.productPrice}>Original Price: ${product.actual_price}</p>
+                        <p style={styles.productPrice}>Offer Price: ${product.offer_price}</p>
+                        <p style={styles.warranty}>Warranty: {product.warranty_period}</p>
+                        <div style={styles.sellerInfo}>
+                            <h4 style={styles.sellerName}>Seller: {product.seller.name}</h4>
+                            <img src={`${product.seller.photo}`} alt={product.seller.name} style={styles.sellerLogo} />
+                            <p style={styles.sellerRating}>Rating: {product.seller.rating} / 5</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 // Define some basic styles
@@ -102,4 +112,4 @@ const styles = {
     },
 };
 
-export default ProductListPage;
+export default ProductList;
