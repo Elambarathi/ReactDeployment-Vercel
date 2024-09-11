@@ -36,4 +36,70 @@ function ProductListPage() {
   );
 }
 
+// Define some basic styles
+const styles = {
+    container: {
+        padding: '20px',
+        backgroundColor: '#f7f9fc',
+    },
+    heading: {
+        textAlign: 'center',
+        marginBottom: '20px',
+        color: '#333',
+    },
+    productGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+        gap: '20px',
+    },
+    productCard: {
+        backgroundColor: '#fff',
+        padding: '15px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        transition: 'transform 0.2s',
+    },
+    productTitle: {
+        marginBottom: '10px',
+        color: '#007bff',
+    },
+    productImage: {
+        width: '100%',
+        height: 'auto',
+        borderRadius: '8px',
+        marginBottom: '10px',
+    },
+    productDescription: {
+        color: '#555',
+        marginBottom: '10px',
+    },
+    productPrice: {
+        color: '#333',
+        marginBottom: '5px',
+    },
+    warranty: {
+        color: '#666',
+        marginBottom: '10px',
+    },
+    sellerInfo: {
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: '10px',
+    },
+    sellerName: {
+        marginRight: '10px',
+        color: '#007bff',
+    },
+    sellerLogo: {
+        width: '40px',
+        height: '40px',
+        borderRadius: '50%',
+        objectFit: 'cover',
+        marginRight: '10px',
+    },
+    sellerRating: {
+        color: '#555',
+    },
+};
+
 export default ProductListPage;
